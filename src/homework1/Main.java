@@ -17,10 +17,10 @@ public class Main {
         System.out.println(expressionResult(1.2f, 0.7f, 5f, 2f));
 
         // Вызов метода напечатает True если сумма аргументов лежит в диапозоне от 10 до 20, иначе False
-        System.out.println("Сумма чисел находится в пределах от 10 до 20 (включительно): " + checkSum(2, 10));
+        System.out.println("Сумма чисел находится в пределах от 10 до 20 (включительно): " + checkSum(10, 5));
 
         // Вызов метода напечатает является число положительным или нет
-        positiveCheckNumber(-1);
+        positiveCheckNumber(-34);
 
         // Вызов метода печатает в консоли True если число отрицательное, иначе False для положительного
         System.out.println("Если число отрицательное, то true, если положительное, то false: " + negetiveCheckNumber(-5));
@@ -32,6 +32,8 @@ public class Main {
         // где year аргумент переданный методу. Иначе "year год не является високосным"
         checkingLeapYear(2024);
 
+        //Вызов метода выведет число в обратном порядке при условии, если оно больше 100 и меньше 999
+        System.out.println(reverseNumber(976));
     }
 
     /*
@@ -39,8 +41,14 @@ public class Main {
         где a, b, c, d – аргументы этого метода, имеющие тип float.
     */
 
-    public static float expressionResult(float a, float b, float c, float d) {
-        return a * (b + (c / d));
+    public static String expressionResult(float a, float b, float c, float d) {
+
+        if (d != 0) {
+            return "Результат выражения = " + (a * (b + (c / d)));
+        } else {
+            return "Деление на ноль невозможно";
+        }
+
     }
 
     /*
@@ -111,6 +119,24 @@ public class Main {
             System.out.println(year + " год является високосным");
         } else {
             System.out.printf(year + " год не является високосным");
+        }
+
+    }
+
+    /*
+      (9) Создать метод, который принимает число. Если данное число больше 100 и меньше 999 включительно -
+      вывести в консоль цифры данного числа в обратном порядке. Например, введено число 725 -> в консоли будет: 527
+    */
+
+    public static String reverseNumber(int number) {
+
+        if (number > 100 && number < 999) {
+            int numberReverseFirst = number / 100;
+            int numberReverseSecond = number / 10 % 10;
+            int numberReverseThird = number % 10;
+            return "Число " + number + " в обратном порядке = " + numberReverseThird + numberReverseSecond + numberReverseFirst;
+        } else {
+            return "Число нельзя вывести в обратном порядке, т.к оно меньше 100 либо больше 999.";
         }
 
     }
