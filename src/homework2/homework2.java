@@ -22,9 +22,17 @@ public class homework2 {
         // Вызов метода находит Максимальное и Минимальное число массива.
         findMaxAndMinNumberArray();
 
-        // Вызов метода возращает True, если сумма левой и правой части массива равны. Иначе False
-//        int[] balanceArray = {1, 1, 1, 2, 1};
-//        System.out.println(checkBalance(balanceArray));
+       /* Вызов метода возращает True, если сумма левой и правой части массива равны. Иначе False
+            {1, 1, 0, || 5, 2} - false
+            {1, 1, 1, || 2, 1} - true
+            {10, 0, || 5, 2, 7} - false
+            {1, 2, || 0, 3} - true
+            {4, 2, 0, || 1, 5} - true
+            {2, 2, 2, 1, 2, 2, || 10, 1} - true
+            {10, || 2, 1, 5, 2} - true
+         */
+        int[] balanceArray = {10, 2, 1, 5, 2};
+        System.out.println(checkBalance(balanceArray));
 
         // Вызов метода перемещает элементы массива вправо, если n - положительное. Влево, если n - отрицательное.
 //        moveArray(1);
@@ -129,22 +137,21 @@ public class homework2 {
      */
 
     public static boolean checkBalance(int[] array) {
-        int centerArray = array.length / 2;
         int leftSumArray = 0;
         int rightSumArray = 0;
 
         for (int i = 0; i < array.length; i++) {
-            if (centerArray <= i) {
-                leftSumArray += array[i];
-            } else {
-                rightSumArray += array[i];
+            leftSumArray += array[i];
+        }
+
+        for (int i = 0; i < array.length; i++) {
+            if (leftSumArray == rightSumArray) {
+                return true;
             }
+            leftSumArray -= array[i];
+            rightSumArray += array[i];
         }
-        if (leftSumArray == rightSumArray) {
-            return true;
-        } else {
-            return false;
-        }
+        return false;
     }
 
     /*
