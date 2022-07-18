@@ -8,20 +8,35 @@ public class homework2 {
 
     public static void main(String[] args) {
 
+        // Вызов метода генерирует массив с размером 7 и диапазоном чисел от 0 до 10
+        int[] arrayGenerate = generateArray(7, 10);
+
         // Вызов метода заменяет все 1 в массиве на 0 и наоборот все 0 на 1
-        replaceElementArray();
+        int[] arrayNumber = {1, 1, 0, 0, 1, 0, 1, 1, 0, 0};
+        System.out.println("Если в массиве есть цифры помимо 1 и 0, то массив не будет изменен полностью.");
+        printArray("Массив до изменений", arrayNumber);
+        printArray("Массив после изменений", replaceElementArray(arrayNumber));
+        System.out.println();
 
         // Вызов метода заполняет массив с шагом в 3. В результат в консоль выводятся 0 3 6 9 12 15 18 21
-        fillArray();
+        printArray("Массив с шагом 3", fillArray());
+        System.out.println();
 
         // Вызов метода проверяет числа в массиве если они меньше 6, то умножаются на 2.
-        numbersChangeArray();
+        int[] numbers = {1, 5, 3, 2, 11, 4, 5, 2, 4, 8, 9, 1};
+        printArray("Массив до изменений", numbers);
+        printArray("Массив после изменений", numbersChangeArray(numbers));
+        System.out.println();
 
         // Вызов метода заполняет двумерный массив единицами по диагоналям.
         fillTwoDimensionalArray();
+        System.out.println();
 
         // Вызов метода находит Максимальное и Минимальное число массива.
-        findMaxAndMinNumberArray();
+        System.out.println("Максимальное число массива: " + findMaxNumberArray(arrayGenerate));
+        System.out.println("Минимальное число массива: " + finMinNumberArray(arrayGenerate));
+        System.out.println();
+
 
        /* Вызов метода возращает True, если сумма левой и правой части массива равны. Иначе False
             {1, 1, 0, || 5, 2} - false
@@ -34,10 +49,13 @@ public class homework2 {
             {20, 4, 6, 2, 5, 8, 15} - true
          */
         int[] balanceArray = {20, 4, 6, 2, 5, 8, 15};
-        System.out.println(checkBalance(balanceArray));
+        System.out.println("Сумма левой и правой части массива равны? " + checkBalance(balanceArray));
+        System.out.println();
 
         // Вызов метода перемещает элементы массива вправо, если n - положительное. Влево, если n - отрицательное.
-        moveArray(0);
+        printArray("Массив до сдвига", arrayGenerate);
+        printArray("Массив после сдвига", moveArray(arrayGenerate, 1));
+        System.out.println();
     }
 
     /*
@@ -45,17 +63,18 @@ public class homework2 {
         0, 0 ]. С помощью цикла и условия заменить 0 на 1, 1 на 0;
     */
 
-    public static void replaceElementArray() {
-        int[] arrayNumber = {1, 1, 0, 0, 1, 0, 1, 1, 0, 0};
-        System.out.println("Массив до изменений: " + Arrays.toString(arrayNumber));
-        for (int i = 0; i < arrayNumber.length; i++) {
-            if (arrayNumber[i] == 0) {
-                arrayNumber[i] = 1;
-            } else {
-                arrayNumber[i] = 0;
+    public static int[] replaceElementArray(int[] array) {
+        for (int i = 0; i < array.length; i++) {
+            switch (array[i]) {
+                case 0:
+                    array[i] = 1;
+                    break;
+                case 1:
+                    array[i] = 0;
+                    break;
             }
         }
-        System.out.println("Массив после изменений: " + Arrays.toString(arrayNumber));
+        return array;
     }
 
     /*
@@ -63,14 +82,13 @@ public class homework2 {
         значениями 0 3 6 9 12 15 18 21;
     */
 
-    public static void fillArray() {
+    public static int[] fillArray() {
         int[] numbers = new int[8];
 
         for (int i = 0; i < numbers.length; i++) {
             numbers[i] = i * 3;
         }
-
-        System.out.println("Массив с шагом 3: " + Arrays.toString(numbers));
+        return numbers;
     }
 
     /*
@@ -78,15 +96,13 @@ public class homework2 {
         умножить на 2;
      */
 
-    public static void numbersChangeArray() {
-        int[] numbers = {1, 5, 3, 2, 11, 4, 5, 2, 4, 8, 9, 1};
-        System.out.println("Массив до изменений: " + Arrays.toString(numbers));
+    public static int[] numbersChangeArray(int[] numbers) {
         for (int i = 0; i < numbers.length; i++) {
             if (numbers[i] < 6) {
                 numbers[i] *= 2;
             }
         }
-        System.out.println("Массив после изменений: " + Arrays.toString(numbers));
+        return numbers;
     }
 
     /*
@@ -109,23 +125,29 @@ public class homework2 {
         }
     }
 
-    /*
-     (5)** Задать одномерный массив и найти в нем минимальный и максимальный элементы (без
-        помощи интернета
-     */
 
-    public static void findMaxAndMinNumberArray() {
-        int[] numbers = {24, 342, 214, 62, 31, 51, 53, 36, 14, 63, 34};
+    // Метод поиска максимального значения в массиве
+
+    public static int findMaxNumberArray(int[] numbers) {
         int max = numbers.length;
-        int min = numbers[0];
         for (int i = 0; i < numbers.length; i++) {
             if (numbers[i] > max) {
                 max = numbers[i];
-            } else if (numbers[i] < min) {
+            }
+        }
+        return max;
+    }
+
+    // Метод поиска минимального значения в массиве
+
+    public static int finMinNumberArray(int[] numbers) {
+        int min = numbers[0];
+        for (int i = 0; i < numbers.length; i++) {
+            if (numbers[i] < min) {
                 min = numbers[i];
             }
         }
-        System.out.println("Максимальное число массива = " + max + "\nМинимальное число массива = " + min);
+        return min;
     }
 
     /*
@@ -162,37 +184,57 @@ public class homework2 {
         можете выбирать сами.
      */
 
-    public static void moveArray(int n) {
-        Random random = new Random();
-        int[] numbers = new int[7];
+    public static int[] moveArray(int[] array, int n) {
         int copy = 0;
-
-        // Цикл генерирует массив состоящий из 7 рандомных элемнтов от 0 до 100
-        for (int i = 0; i < numbers.length; i++) {
-            numbers[i] = random.nextInt(10);
-        }
-        System.out.println("Массив до сдвига: " + Arrays.toString(numbers));
 
         if (n > 0) {
             for (int i = 0; i < n; i++) {
-                copy = numbers[numbers.length - 1];
-                for (int j = numbers.length - 1; j > 0; j--) {
-                    numbers[j] = numbers[j - 1];
+                copy = array[array.length - 1];
+                for (int j = array.length - 1; j > 0; j--) {
+                    array[j] = array[j - 1];
                 }
-                numbers[0] = copy;
+                array[0] = copy;
             }
-            System.out.println("Массив после сдвига: " + Arrays.toString(numbers));
+            return array;
         } else if (n < 0) {
-            for (int i = numbers.length; i > n; i--) {
-                copy = numbers[numbers.length - 1];
-                for (int j = numbers.length - 1; j > 0; j--) {
-                    numbers[j] = numbers[j - 1];
+            for (int i = array.length; i > n; i--) {
+                copy = array[array.length - 1];
+                for (int j = array.length - 1; j > 0; j--) {
+                    array[j] = array[j - 1];
                 }
-                numbers[0] = copy;
+                array[0] = copy;
             }
-            System.out.println("Массив после сдвига: " + Arrays.toString(numbers));
+            return array;
         } else {
-            System.out.println("Для сдвига массива укажите параметр n больше или меньше 0");
+            return array;
         }
+    }
+
+    /*
+        Вызов метода генерирует случайный массив с определенными параметрами.
+         - size = размер генерируемого массива
+         - range = диапазон значений генерируемого массива.
+         Например, generateArray(7, 10) - Сгенерируется массив с размером 7 и диапозоном чисел от 0 до 10.
+     */
+    public static int[] generateArray(int size, int range) {
+        Random random = new Random();
+        int[] array = new int[size];
+        for (int i = 0; i < array.length; i++) {
+            array[i] = random.nextInt(range);
+        }
+        return array;
+    }
+
+    /*
+        Метод распечатывает массив.
+     */
+
+    public static void printArray(String message, int[] array) {
+        System.out.print(message + ":\t");
+        System.out.print("[");
+        for (int i = 0; i < array.length; i++) {
+            System.out.print("\t" + array[i]);
+        }
+        System.out.println(" ]");
     }
 }
