@@ -131,13 +131,13 @@ public class Main {
     public static String reverseNumber(int number) {
 
         if (number > 100 && number < 999) {
-            int numberReverseFirst = number / 100;
-            int numberReverseSecond = number / 10 % 10;
-            int numberReverseThird = number % 10;
-            return "Число " + number + " в обратном порядке = " + numberReverseThird + numberReverseSecond + numberReverseFirst;
+            String numberToString = Integer.toString(number);
+            String StrBuilder = new StringBuilder(numberToString).reverse().toString();
+            return "Число: " + StrBuilder;
         } else {
             return "Число нельзя вывести в обратном порядке, т.к оно меньше 100 либо больше 999.";
         }
 
     }
+
 }
