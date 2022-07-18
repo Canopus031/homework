@@ -2,6 +2,7 @@ package homework2;
 
 
 import java.util.Random;
+import java.util.Arrays;
 
 public class homework2 {
 
@@ -30,12 +31,13 @@ public class homework2 {
             {4, 2, 0, || 1, 5} - true
             {2, 2, 2, 1, 2, 2, || 10, 1} - true
             {10, || 2, 1, 5, 2} - true
+            {20, 4, 6, 2, 5, 8, 15} - true
          */
-        int[] balanceArray = {10, 2, 1, 5, 2};
+        int[] balanceArray = {20, 4, 6, 2, 5, 8, 15};
         System.out.println(checkBalance(balanceArray));
 
         // Вызов метода перемещает элементы массива вправо, если n - положительное. Влево, если n - отрицательное.
-//        moveArray(1);
+        moveArray(0);
     }
 
     /*
@@ -45,17 +47,15 @@ public class homework2 {
 
     public static void replaceElementArray() {
         int[] arrayNumber = {1, 1, 0, 0, 1, 0, 1, 1, 0, 0};
-
+        System.out.println("Массив до изменений: " + Arrays.toString(arrayNumber));
         for (int i = 0; i < arrayNumber.length; i++) {
             if (arrayNumber[i] == 0) {
                 arrayNumber[i] = 1;
-                System.out.print(arrayNumber[i] + " ");
             } else {
                 arrayNumber[i] = 0;
-                System.out.print(arrayNumber[i] + " ");
             }
         }
-        System.out.println();
+        System.out.println("Массив после изменений: " + Arrays.toString(arrayNumber));
     }
 
     /*
@@ -68,9 +68,9 @@ public class homework2 {
 
         for (int i = 0; i < numbers.length; i++) {
             numbers[i] = i * 3;
-            System.out.print(numbers[i] + " ");
         }
-        System.out.println();
+
+        System.out.println("Массив с шагом 3: " + Arrays.toString(numbers));
     }
 
     /*
@@ -80,14 +80,13 @@ public class homework2 {
 
     public static void numbersChangeArray() {
         int[] numbers = {1, 5, 3, 2, 11, 4, 5, 2, 4, 8, 9, 1};
-
+        System.out.println("Массив до изменений: " + Arrays.toString(numbers));
         for (int i = 0; i < numbers.length; i++) {
             if (numbers[i] < 6) {
                 numbers[i] *= 2;
             }
-            System.out.print(numbers[i] + " ");
         }
-        System.out.println();
+        System.out.println("Массив после изменений: " + Arrays.toString(numbers));
     }
 
     /*
@@ -144,12 +143,12 @@ public class homework2 {
             leftSumArray += array[i];
         }
 
-        for (int i = 0; i < array.length; i++) {
+        for (int j = 0; j < array.length; j++) {
             if (leftSumArray == rightSumArray) {
                 return true;
             }
-            leftSumArray -= array[i];
-            rightSumArray += array[i];
+            leftSumArray -= array[j];
+            rightSumArray += array[j];
         }
         return false;
     }
@@ -166,20 +165,34 @@ public class homework2 {
     public static void moveArray(int n) {
         Random random = new Random();
         int[] numbers = new int[7];
-        int[] copyArrayNumbers = numbers;
+        int copy = 0;
 
         // Цикл генерирует массив состоящий из 7 рандомных элемнтов от 0 до 100
         for (int i = 0; i < numbers.length; i++) {
-            numbers[i] = random.nextInt(100);
-            System.out.print(numbers[i] + " ");
+            numbers[i] = random.nextInt(10);
         }
-        System.out.println();
+        System.out.println("Массив до сдвига: " + Arrays.toString(numbers));
 
-        for (int i = 0; i < numbers.length; i++) {
-            if (n >= 0) {
-                copyArrayNumbers[i] = numbers[i + n];
-                System.out.print(copyArrayNumbers[i] + " ");
+        if (n > 0) {
+            for (int i = 0; i < n; i++) {
+                copy = numbers[numbers.length - 1];
+                for (int j = numbers.length - 1; j > 0; j--) {
+                    numbers[j] = numbers[j - 1];
+                }
+                numbers[0] = copy;
             }
+            System.out.println("Массив после сдвига: " + Arrays.toString(numbers));
+        } else if (n < 0) {
+            for (int i = numbers.length; i > n; i--) {
+                copy = numbers[numbers.length - 1];
+                for (int j = numbers.length - 1; j > 0; j--) {
+                    numbers[j] = numbers[j - 1];
+                }
+                numbers[0] = copy;
+            }
+            System.out.println("Массив после сдвига: " + Arrays.toString(numbers));
+        } else {
+            System.out.println("Для сдвига массива укажите параметр n больше или меньше 0");
         }
     }
 }
