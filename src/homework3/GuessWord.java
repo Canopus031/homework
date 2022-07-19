@@ -36,7 +36,7 @@ public class GuessWord {
 
     public static void main(String[] args) {
         randomWord();
-        while(true) {
+        while (true) {
             inputValue("Угадайте какое слово из массива загадал бот: \n" + Arrays.toString(words));
             boolean correctAnswer = isCorrectAnswer();
             if (correctAnswer) {

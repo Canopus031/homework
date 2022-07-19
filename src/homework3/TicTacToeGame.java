@@ -11,10 +11,10 @@ public class TicTacToeGame {
     public static final Scanner SCANNER = new Scanner(System.in);
     public static final Random RANDOM = new Random();
 
-    public static int fieldSizeX = 5; // Размеры поля по X
-    public static int fieldSizeY = 5; // Размеры поля по Y
+    public static int fieldSizeX = 3; // Размеры поля по X
+    public static int fieldSizeY = 3; // Размеры поля по Y
     public static char[][] field; // Поле
-    public static int charSeries = 4; // Количество одинаковых символов для победы ( Серия )
+    public static int charSeries = 3; // Количество одинаковых символов для победы ( Серия )
 
     public static void main(String[] args) {
         initialMap(fieldSizeX, fieldSizeY);
@@ -157,19 +157,15 @@ public class TicTacToeGame {
             int yWin = 0;
             int[] diagonalArray = {0, 0, 0, 0};
             for (int y = 0; y < field.length; y++) {
-                // можно сбрасывать каунтер в ноль, если он != 4 и очередная клетка != dot
                 // Проверка в колонках и строках
                 if (field[x][y] == c && field[x][y] == c && field[x][y] == c) {
                     yWin++;
+                } else if (field[x][y] != c) { // Проверка для поля 5 на 5 и более
+                    yWin = 0;
                 }
                 if (field[y][x] == c && field[y][x] == c && field[y][x] == c) {
                     xWin++;
-                }
-
-                if (field[x][y] != c) { // Проверка для поля 5 на 5 и более
-                    yWin = 0;
-                }
-                if (field[y][x] != c) { // Проверка для поля 5 на 5 и более
+                } else if (field[y][x] != c) { // Проверка для поля 5 на 5 и более
                     xWin = 0;
                 }
 
@@ -179,31 +175,35 @@ public class TicTacToeGame {
                 if ((field.length - 1 - x + y) < field.length) {
                     if (field[y][field.length - 1 - x + y] == c) {
                         diagonalArray[0] += 1;
+                    } else if (field[y][field.length - 1 - x + y] != c) {
+                        diagonalArray[0] = 0;
                     }
                 } else {
                     diagonalArray[0] = 0;
                 }
-
                 if (x + y < field.length && x > 0) {
                     if (field[y + x][y] == c) {
                         diagonalArray[1] += 1;
+                    } else if (field[y + x][y] != c) {
+                        diagonalArray[1] = 0;
                     }
                 } else {
                     diagonalArray[1] = 0;
                 }
-
-                //  Подсчет обратной диагонали
                 if ((x - y) >= 0) {
                     if (field[y][x - y] == c) {
                         diagonalArray[2] += 1;
+                    } else if (field[y][x - y] != c) {
+                        diagonalArray[2] = 0;
                     }
                 } else {
                     diagonalArray[2] = 0;
                 }
-
                 if (y > 0) {
                     if (field[y][field.length - y] == c) {
                         diagonalArray[3] += 1;
+                    } else if (field[y][field.length - y] != c) {
+                        diagonalArray[3] = 0;
                     }
                 } else {
                     diagonalArray[3] = 0;
