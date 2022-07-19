@@ -152,13 +152,10 @@ public class TicTacToeGame {
      */
 
     public static boolean checkWin(char c) {
-        int yDiagonal = 0;
-        int xDiagonal = 0;
-        int yDiagonalInvert = 0;
-        int xDiagonalInvert = 0;
         for (int x = 0; x < field.length; x++) {
             int xWin = 0;
             int yWin = 0;
+            int[] diagonalArray = {0, 0, 0, 0};
             for (int y = 0; y < field.length; y++) {
                 // Проверка в колонках и строках
                 if (field[x][y] == c && field[x][y] == c && field[x][y] == c) {
@@ -172,38 +169,37 @@ public class TicTacToeGame {
                 // Проверка в диагоналях
                 if ((field.length - 1 - x + y) < field.length) {
                     if (field[y][field.length - 1 - x + y] == c) {
-                        yDiagonal++;
+                        diagonalArray[0] += 1;
                     }
                 } else {
-                    yDiagonal = 0;
+                    diagonalArray[0] = 0;
                 }
 
                 if (x + y < field.length && x > 0) {
                     if (field[y + x][y] == c) {
-                        xDiagonal++;
+                        diagonalArray[1] += 1;
                     }
                 } else {
-                    xDiagonal = 0;
+                    diagonalArray[1] = 0;
                 }
 
                 //  Подсчет обратной диагонали
                 if ((x - y) >= 0) {
                     if (field[y][x - y] == c) {
-                        yDiagonalInvert++;
+                        diagonalArray[2] += 1;
                     }
                 } else {
-                    yDiagonalInvert = 0;
+                    diagonalArray[2] = 0;
                 }
 
                 if (y > 0) {
                     if (field[y][field.length - y] == c) {
-                        xDiagonalInvert++;
+                        diagonalArray[3] += 1;
                     }
                 } else {
-                    xDiagonalInvert = 0;
+                    diagonalArray[3] = 0;
                 }
-
-                if (yDiagonal == charSeries || xDiagonal == charSeries || yDiagonalInvert == charSeries || xDiagonalInvert == charSeries)
+                if (diagonalArray[0] == charSeries || diagonalArray[1] == charSeries || diagonalArray[2] == charSeries || diagonalArray[3] == charSeries)
                     return true;
             }
         }
