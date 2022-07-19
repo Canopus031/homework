@@ -11,10 +11,10 @@ public class TicTacToeGame {
     public static final Scanner SCANNER = new Scanner(System.in);
     public static final Random RANDOM = new Random();
 
-    public static int fieldSizeX = 3; // Размеры поля по X
-    public static int fieldSizeY = 3; // Размеры поля по Y
+    public static int fieldSizeX = 5; // Размеры поля по X
+    public static int fieldSizeY = 5; // Размеры поля по Y
     public static char[][] field; // Поле
-    public static int charSeries = 3; // Количество одинаковых символов для победы ( Серия )
+    public static int charSeries = 4; // Количество одинаковых символов для победы ( Серия )
 
     public static void main(String[] args) {
         initialMap(fieldSizeX, fieldSizeY);
@@ -157,6 +157,7 @@ public class TicTacToeGame {
             int yWin = 0;
             int[] diagonalArray = {0, 0, 0, 0};
             for (int y = 0; y < field.length; y++) {
+                // можно сбрасывать каунтер в ноль, если он != 4 и очередная клетка != dot
                 // Проверка в колонках и строках
                 if (field[x][y] == c && field[x][y] == c && field[x][y] == c) {
                     yWin++;
@@ -164,6 +165,14 @@ public class TicTacToeGame {
                 if (field[y][x] == c && field[y][x] == c && field[y][x] == c) {
                     xWin++;
                 }
+
+                if (field[x][y] != c) { // Проверка для поля 5 на 5 и более
+                    yWin = 0;
+                }
+                if (field[y][x] != c) { // Проверка для поля 5 на 5 и более
+                    xWin = 0;
+                }
+
                 if (xWin == charSeries || yWin == charSeries) return true;
 
                 // Проверка в диагоналях
@@ -199,6 +208,7 @@ public class TicTacToeGame {
                 } else {
                     diagonalArray[3] = 0;
                 }
+
                 if (diagonalArray[0] == charSeries || diagonalArray[1] == charSeries || diagonalArray[2] == charSeries || diagonalArray[3] == charSeries)
                     return true;
             }
