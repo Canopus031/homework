@@ -16,6 +16,9 @@ public class TicTacToeGame {
     public static char[][] field; // Поле
     public static int charSeries = 3; // Количество одинаковых символов для победы ( Серия )
 
+    public static int x;
+    public static int y;
+
     public static void main(String[] args) {
         initialMap(fieldSizeX, fieldSizeY);
         printMap();
@@ -77,8 +80,6 @@ public class TicTacToeGame {
      */
 
     public static void inputValue() {
-        int x;
-        int y;
         do {
             System.out.println("Введите координаты: ");
             x = SCANNER.nextInt() - 1;
@@ -116,7 +117,7 @@ public class TicTacToeGame {
         } while (!(isEmptyCell(x, y)));
         field[x][y] = PC_DOT;
         // Для работы метода aiStep() нужно закоментировать все что есть в методе pcInputValue() и раскоментировать метод aiStep()
-//        aiStep();
+//        aiStep(x, y);
     }
 
     /*
@@ -124,26 +125,21 @@ public class TicTacToeGame {
         Метод возращает массив с координатами. В цикле идет проверка, если числа валидные и в этой ячейке стоит HUMAN_DOT и ячейка с другой строны свободна. То Бот ставит туда свой символ
      */
 
-    public static char aiStep() {
-        int xInt = 0;
-        int yInt = 0;
-        for (int x = 0; x < field.length; x++) {
-            for (int y = 0; y < field.length; y++) {
-                if (isValidCell(x, y - 1) && (field[x][y] == HUMAN_DOT) && isEmptyCell(x, y - 1)) {
-                    xInt = x;
-                    yInt = y - 1;
-                } else if (isValidCell(x, y + 1) && (field[x][y] == HUMAN_DOT) && isEmptyCell(x, y + 1)) {
-                    xInt = x;
-                    yInt = y + 1;
-                } else if (isValidCell(x + 1, y) && (field[x][y] == HUMAN_DOT) && isEmptyCell(x + 1, y)) {
-                    xInt = x + 1;
-                    yInt = y;
-                } else if (isValidCell(x - 1, y) && (field[x][y] == HUMAN_DOT) && isEmptyCell(x - 1, y)) {
-                    xInt = x - 1;
-                    yInt = y;
-                }
-            }
+    public static char aiStep(int xInt, int yInt) {
+        if (isValidCell(x, y - 1) && (field[x][y] == HUMAN_DOT) && isEmptyCell(x, y - 1)) {
+            xInt = x;
+            yInt = y - 1;
+        } else if (isValidCell(x, y + 1) && (field[x][y] == HUMAN_DOT) && isEmptyCell(x, y + 1)) {
+            xInt = x;
+            yInt = y + 1;
+        } else if (isValidCell(x + 1, y) && (field[x][y] == HUMAN_DOT) && isEmptyCell(x + 1, y)) {
+            xInt = x + 1;
+            yInt = y;
+        } else if (isValidCell(x - 1, y) && (field[x][y] == HUMAN_DOT) && isEmptyCell(x - 1, y)) {
+            xInt = x - 1;
+            yInt = y;
         }
+
         return field[xInt][yInt] = PC_DOT;
     }
 
