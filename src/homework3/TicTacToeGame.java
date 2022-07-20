@@ -63,7 +63,7 @@ public class TicTacToeGame {
     }
 
     /*
-        Метод рисует карту в консоли.
+        Метод печатает карту в консоли.
      */
 
     public static void printMap() {
@@ -76,7 +76,7 @@ public class TicTacToeGame {
     }
 
     /*
-        Метод запрашивает у пользователя координаты.
+        Метод запрашивает у пользователя координаты и записывает их в переменный x и y
      */
 
     public static void inputValue() {
@@ -105,7 +105,7 @@ public class TicTacToeGame {
     }
 
     /*
-        Метод позволяет компьютеру сделать ход.
+        Ход компьютера генерируется благодаря рандому.
      */
 
     public static void pcInputValue() {
@@ -122,7 +122,8 @@ public class TicTacToeGame {
 
     /*
         Что-то типа ИИ который блокирует ходы пользователя.
-        Метод возращает массив с координатами. В цикле идет проверка, если числа валидные и в этой ячейке стоит HUMAN_DOT и ячейка с другой строны свободна. То Бот ставит туда свой символ
+        Метод возращает массив с координатами. В цикле идет проверка, если числа валидные и в этой ячейке стоит HUMAN_DOT и ячейка с другой строны свободна. То Бот ставит туда свой символ.
+        Возможны баги.
      */
 
     public static char aiStep(int xInt, int yInt) {
@@ -138,34 +139,39 @@ public class TicTacToeGame {
         } else if (isValidCell(x - 1, y) && (field[x][y] == HUMAN_DOT) && isEmptyCell(x - 1, y)) {
             xInt = x - 1;
             yInt = y;
+        } else {
+            do {
+                xInt = RANDOM.nextInt(fieldSizeX);
+                yInt = RANDOM.nextInt(fieldSizeY);
+            } while (!(isEmptyCell(xInt, yInt)));
         }
 
         return field[xInt][yInt] = PC_DOT;
     }
 
     /*
-        Метод проверяет выиграл кто-то или нет. Метод возращает булево значение
+        Метод для проверки выиграша. Если компьютер или игрок победили, то метод возращает True, иначе false
      */
 
     public static boolean checkWin(char c) {
         for (int x = 0; x < field.length; x++) {
-            int xWin = 0;
-            int yWin = 0;
+            int row = 0;
+            int col = 0;
             int[] diagonalArray = {0, 0, 0, 0};
             for (int y = 0; y < field.length; y++) {
                 // Проверка в колонках и строках
                 if (field[x][y] == c && field[x][y] == c && field[x][y] == c) {
-                    yWin++;
-                } else if (field[x][y] != c) { // Проверка для поля 5 на 5 и более
-                    yWin = 0;
+                    row++;
+                } else if (field[x][y] != c) {
+                    row = 0;
                 }
                 if (field[y][x] == c && field[y][x] == c && field[y][x] == c) {
-                    xWin++;
-                } else if (field[y][x] != c) { // Проверка для поля 5 на 5 и более
-                    xWin = 0;
+                    col++;
+                } else if (field[y][x] != c) {
+                    col = 0;
                 }
 
-                if (xWin == charSeries || yWin == charSeries) return true;
+                if (row == charSeries || col == charSeries) return true;
 
                 // Проверка в диагоналях
                 if ((field.length - 1 - x + y) < field.length) {
