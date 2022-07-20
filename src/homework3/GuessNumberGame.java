@@ -70,7 +70,7 @@ public class GuessNumberGame {
     public static void isInputValueCorrect() {
 
         while (true) {
-            inputValue("Введите число которое было загадно, от 0 до 9: ", 0, 9);
+            inputValue("Введите число которое было загадано, от 0 до 9: ", 0, 9);
             if (userAnswer == randomNumber) {
                 System.out.println("Вы отгадали!");
 
@@ -96,10 +96,10 @@ public class GuessNumberGame {
                 }
 
             } else if (userAnswer < randomNumber) {
-                System.out.println("Введенное вами значение меньше загаданого числа. Попробуйте еще раз");
+                System.out.println("Введенное вами число меньше заданного числа. Попробуйте еще раз");
                 maxTryCount -= 1;
             } else if (userAnswer > randomNumber) {
-                System.out.println("Введенное вами значение больше загаданого числа. Попробуйте еще раз");
+                System.out.println("Введенное вами число больше заданного числа. Попробуйте еще раз");
                 maxTryCount -= 1;
             }
         }

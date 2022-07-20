@@ -40,10 +40,10 @@ public class GuessWord {
             inputValue("Угадайте какое слово из массива загадал бот: \n" + Arrays.toString(words));
             boolean correctAnswer = isCorrectAnswer();
             if (correctAnswer) {
-                System.out.println("Поздравляю, вы отгадали слово!");
+                System.out.println("Поздравляю, вы угадали слово!");
                 break;
             } else {
-                System.out.println("\nВы не отгадали, попробуйте еще раз\n");
+                System.out.println("\nВы не угадали, попробуйте еще раз\n");
             }
         }
     }
