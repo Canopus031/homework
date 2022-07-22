@@ -14,7 +14,7 @@ public class TicTacToeGame {
     public static int fieldSizeX = 3; // Размеры поля по X
     public static int fieldSizeY = 3; // Размеры поля по Y
     public static char[][] field; // Поле
-    public static int charSeries = 3; // Количество одинаковых символов для победы ( Серия )
+    public static int charSeries = 3; // Количество одинаковых символов для победы (Серия)
 
     public static int x;
     public static int y;
@@ -34,7 +34,7 @@ public class TicTacToeGame {
                 break;
             }
             System.out.println();
-            pcInputValue();
+            pcInputValue(); // Можно использовать pcInputValue() или aiStep(x, y). Что-то одно!
             printMap();
             if (checkWin(PC_DOT)) {
                 System.out.println("Поздравляем,победил компьютер!");
@@ -48,8 +48,11 @@ public class TicTacToeGame {
         }
     }
 
-    /*
-        Метод инициализирует карту.
+    /**
+     * Метод инициализирует карту.
+     * @param fieldSizeX - координаты по X.
+     * @param fieldSizeY - координаты по Y.
+     * @return - созданное поле
      */
 
     public static char[][] initialMap(int fieldSizeX, int fieldSizeY) {
@@ -62,8 +65,8 @@ public class TicTacToeGame {
         return field;
     }
 
-    /*
-        Метод печатает карту в консоли.
+    /**
+     * Метод печатает карту в консоли.
      */
 
     public static void printMap() {
@@ -75,8 +78,8 @@ public class TicTacToeGame {
         }
     }
 
-    /*
-        Метод запрашивает у пользователя координаты и записывает их в переменный x и y
+    /**
+     * Метод запрашивает у пользователя координаты и помещает на них фишку игрока
      */
 
     public static void inputValue() {
@@ -88,24 +91,30 @@ public class TicTacToeGame {
         field[x][y] = HUMAN_DOT;
     }
 
-    /*
-        Метод проверяет допустимы ли введенные значения
+    /**
+     * Метод проверяет, являются ли введенные значения допустимыми.
+     * @param x - координаты по X.
+     * @param y - координаты по Y.
+     * @return - результат проверки координат. [True || False]
      */
 
     public static boolean isValidCell(int x, int y) {
         return x >= 0 && x < fieldSizeX && y >= 0 && y < fieldSizeY;
     }
 
-    /*
-        Метод проверяет свободна ли ячейка
+    /**
+     * Метод проверяет свободна ли ячейка.
+     * @param x - координаты по X.
+     * @param y - координаты по Y.
+     * @return - результат проверки ячейки. [True || False]
      */
 
     public static boolean isEmptyCell(int x, int y) {
         return field[x][y] == EMPTY_DOT;
     }
 
-    /*
-        Ход компьютера генерируется благодаря рандому.
+    /**
+     * Метод генерирует случайные координаты для хода компьютера
      */
 
     public static void pcInputValue() {
@@ -116,14 +125,15 @@ public class TicTacToeGame {
             y = RANDOM.nextInt(fieldSizeY);
         } while (!(isEmptyCell(x, y)));
         field[x][y] = PC_DOT;
-        // Для работы метода aiStep() нужно закоментировать все что есть в методе pcInputValue() и раскоментировать метод aiStep()
-//        aiStep(x, y);
     }
 
-    /*
-        Что-то типа ИИ который блокирует ходы пользователя.
-        Метод возращает массив с координатами. В цикле идет проверка, если числа валидные и в этой ячейке стоит HUMAN_DOT и ячейка с другой строны свободна. То Бот ставит туда свой символ.
-        Возможны баги.
+    /**
+     * Что-то типа ИИ который блокирует ходы пользователя.
+     * Метод возвращает массив с координатами. В цикле идет проверка, если числа валидные и в этой ячейке
+     * стоит HUMAN_DOT и ячейка с другой стороны свободна. То Бот ставит туда свой символ.
+     * @param xInt - координаты по X.
+     * @param yInt - координаты по Y.
+     * @return - массив с координатами.
      */
 
     public static char aiStep(int xInt, int yInt) {
@@ -149,8 +159,10 @@ public class TicTacToeGame {
         return field[xInt][yInt] = PC_DOT;
     }
 
-    /*
-        Метод для проверки выиграша. Если компьютер или игрок победили, то метод возращает True, иначе false
+    /**
+     * Способ проверки победы. Если компьютер или игрок выиграли, метод возвращает True, в противном случае false
+     * @param c - фишка игрока / компьютера.
+     * @return - результат проверки победы. [True || False]
      */
 
     public static boolean checkWin(char c) {
@@ -218,8 +230,8 @@ public class TicTacToeGame {
         return false;
     }
 
-    /*
-        Метод проверяет есть свободные ячейки на карте или нет и возращает булево значение.
+    /**
+     * Метод проверяет, есть ли свободные ячейки на карте или нет, и возвращает логическое значение. [True || False]
      */
 
     public static boolean isFullMap() {
