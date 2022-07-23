@@ -16,19 +16,19 @@ public class Main {
         // Вызов метода напечатает результат вычисления аргументов
         System.out.println(expressionResult(1.2f, 0.7f, 5f, 2f));
 
-        // Вызов метода напечатает True если сумма аргументов лежит в диапозоне от 10 до 20, иначе False
+        // Вызов метода напечатает True если сумма аргументов лежит в диапазоне от 10 до 20, иначе False
         System.out.println("Сумма чисел находится в пределах от 10 до 20 (включительно): " + checkSum(10, 5));
 
-        // Вызов метода напечатает является число положительным или нет
+        // Вызов метода напечатает, является ли число положительным или нет
         positiveCheckNumber(-34);
 
         // Вызов метода печатает в консоли True если число отрицательное, иначе False для положительного
-        System.out.println("Если число отрицательное, то true, если положительное, то false: " + negetiveCheckNumber(-5));
+        System.out.println("Если число отрицательное, то true, если положительное, то false: " + negativeCheckNumber(-5));
 
         // Вызов метода напечатает в консоли «Привет, name», где name аргумент переданный методу
         sayHelloName("Алексей");
 
-        // Вызов метода вычисляет является ли год високосным если да, то печатает "year год является високосным",
+        // Вызов метода вычисляет, является ли год високосным годом, если да, то выводится "year год является високосным",
         // где year аргумент переданный методу. Иначе "year год не является високосным"
         checkingLeapYear(2024);
 
@@ -88,7 +88,7 @@ public class Main {
         вернуть true, если число отрицательное, и вернуть false если положительное.
     */
 
-    public static boolean negetiveCheckNumber(int number) {
+    public static boolean negativeCheckNumber(int number) {
 
         if (number < 0) {
             return true;
@@ -131,10 +131,9 @@ public class Main {
     public static String reverseNumber(int number) {
 
         if (number > 100 && number < 999) {
-            int numberReverseFirst = number / 100;
-            int numberReverseSecond = number / 10 % 10;
-            int numberReverseThird = number % 10;
-            return "Число " + number + " в обратном порядке = " + numberReverseThird + numberReverseSecond + numberReverseFirst;
+            String numberToString = Integer.toString(number);
+            String StrBuilder = new StringBuilder(numberToString).reverse().toString();
+            return "Число " + number + " в обратном порядке = " + StrBuilder;
         } else {
             return "Число нельзя вывести в обратном порядке, т.к оно меньше 100 либо больше 999.";
         }
