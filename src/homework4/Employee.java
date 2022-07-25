@@ -9,8 +9,8 @@ public class Employee {
     private String post;
     private String email;
     private String numberPhone;
-    private int salary;
-    private int age;
+    private int salary = 0;
+    private int age = 0;
 
     /**
      * Конструктор класса Employee.
