@@ -32,7 +32,7 @@ public class Animal {
      */
 
     public void run(float obstacleLength) {
-        if (limitRun >= obstacleLength && limitRun != 0) {
+        if (limitRun >= obstacleLength) {
             System.out.printf("[%s] - %s: Пробежал %s м.\n", getTypeAnimal(), name, obstacleLength);
         } else {
             System.out.printf("[%s] - %s: Не смог пробежать %s м.\n", getTypeAnimal(), name, obstacleLength);
@@ -56,7 +56,7 @@ public class Animal {
      */
 
     public void jump(float obstacleHeight) {
-        if (limitJump >= obstacleHeight && limitJump != 0) {
+        if (limitJump >= obstacleHeight) {
             System.out.printf("[%s] - %s: Прыжок удался. Длина прыжка: %s м.\n", getTypeAnimal(), name, obstacleHeight);
         } else {
             System.out.printf("[%s] - %s: Прыжок не удался.\n", getTypeAnimal(), name);

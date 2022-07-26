@@ -2,8 +2,8 @@ package homework5;
 
 public class Horse extends Animal {
 
-    protected static int id = 1;
-    protected int uid;
+    private static int id = 1;
+    private int uid;
 
     public Horse(String name, String color, float limitSwim, float limitRun, float limitJump) {
         super(name, color, limitSwim, limitRun, limitJump, "Лошадь");

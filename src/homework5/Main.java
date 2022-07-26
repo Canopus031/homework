@@ -34,7 +34,7 @@ public class Main {
         Bird bird = new Bird("Бекас", "Красный", 0, 5, 0.2f);
 
         float lengthRun = 350;
-        float lengthJump = 0.5f;
+        float heightJump = 0.5f;
         float lengthSwim = 3.5f;
 
         Animal[] animals = {sharikDog, bobikDog, cat, horse, bird};
@@ -47,7 +47,7 @@ public class Main {
         for (int i = 0; i < animals.length; i++) {
             System.out.println("*******************************");
             animals[i].run(lengthRun);
-            animals[i].jump(lengthJump);
+            animals[i].jump(heightJump);
             animals[i].swim(lengthSwim);
         }
 
