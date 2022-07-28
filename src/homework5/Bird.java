@@ -1,13 +1,19 @@
 package homework5;
 
+import java.util.Random;
+
 public class Bird extends Animal {
+
+    Random limitGenerator = new Random();
 
     private static int id = 1;
     private int uid;
 
-    public Bird(String name, String color, float limitSwim, float limitRun, float limitJump) {
-        super(name, color, limitSwim, limitRun, limitJump, "Птица");
-        uid = id++; // Подсчет созданных птиц.
+    public Bird(String name, String color) {
+        super(name, color, "Птица");
+        this.limitRun = limitGenerator.nextInt(3) + 2;
+        this.limitJump = 0.2f;
+        uid = id++; // Подсчет созданных Птиц.
     }
 
     @Override

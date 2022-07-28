@@ -27,17 +27,17 @@ public class Main {
      */
 
     public static void main(String[] args) {
-        Dog sharikDog = new Dog("Шарик", "Рыжий", 10, 600, 0.5f);
-        Dog bobikDog = new Dog("Бобик", "Черный", 3, 340, 2.1f);
-        Cat cat = new Cat("Мурка", "Белый", 0, 200, 2);
-        Horse horse = new Horse("Боби", "Коричневая", 100, 1500, 3);
-        Bird bird = new Bird("Бекас", "Красный", 0, 5, 0.2f);
+        Dog sharikDog = new Dog("Шарик", "Рыжий");
+        Dog bobikDog = new Dog("Бобик", "Черный");
+        Cat cat = new Cat("Мурка", "Белый");
+        Horse horse = new Horse("Боби", "Коричневая");
+        Bird bird = new Bird("Бекас", "Красный");
 
         float lengthRun = 350;
-        float heightJump = 0.5f;
+        float heightJump = 0.7f;
         float lengthSwim = 3.5f;
 
-        Animal[] animals = {sharikDog, bobikDog, cat, horse, bird};
+        Animal[] animals = {sharikDog, bobikDog, cat,  bird, horse};
 
         System.out.println("****** Информация о животных ******");
         for (int i = 0; i < animals.length; i++) {

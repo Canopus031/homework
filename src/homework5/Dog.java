@@ -1,13 +1,20 @@
 package homework5;
 
+import java.util.Random;
+
 public class Dog extends Animal {
+
+    Random limitGenerator = new Random();
 
     private static int id = 1;
     private int uid;
 
-    public Dog(String name, String color, float limitSwim, float limitRun, float limitJump) {
-        super(name, color, limitSwim, limitRun, limitJump, "Собака");
-        uid = id++; // Подсчет созданных собак.
+    public Dog(String name, String color) {
+        super(name, color, "Собака");
+        this.limitSwim = limitGenerator.nextInt(10) + 1;
+        this.limitRun = limitGenerator.nextInt(500) + 1;
+        this.limitJump = 0.5f;
+        uid = id++; // Подсчет созданных Собак.
     }
 
     /**

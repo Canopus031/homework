@@ -1,12 +1,18 @@
 package homework5;
 
+import java.util.Random;
+
 public class Cat extends Animal {
+
+    Random limitGenerator = new Random();
 
     private static int id = 1;
     private int uid;
 
-    public Cat(String name, String color, float limitSwim, float limitRun, float limitJump) {
-        super(name, color, limitSwim, limitRun, limitJump, "Кот");
+    public Cat(String name, String color) {
+        super(name, color, "Кот");
+        this.limitRun = limitGenerator.nextInt(200) + 1;
+        this.limitJump = limitGenerator.nextInt(2) + 1;
         uid = id++; // Подсчет созданных котов.
     }
 

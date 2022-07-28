@@ -12,19 +12,16 @@ public class Animal {
     /**
      * @param name       - Имя животного.
      * @param color      - Цвет животного.
-     * @param limitSwim  - Ограничение в плавание.
-     * @param limitRun   - Ограничение в беге.
-     * @param limitJump  - Ограничение в прыжках.
      * @param typeAnimal - Тип животного ( Dog, Cat ...etc).
      */
 
-    public Animal(String name, String color, float limitSwim, float limitRun, float limitJump, String typeAnimal) {
+    public Animal(String name, String color, String typeAnimal) {
         this.name = name;
         this.color = color;
-        this.limitSwim = limitSwim;
-        this.limitRun = limitRun;
-        this.limitJump = limitJump;
         this.typeAnimal = typeAnimal;
+        this.limitSwim = 0;
+        this.limitRun = 0;
+        this.limitJump = 0;
     }
 
     /**
@@ -77,8 +74,9 @@ public class Animal {
 
     public String getInfoAnimal() {
         return "Кол-во: [" + this.getId() + "] " + "Тип: [" + this.typeAnimal + "] - " + this.name + ": "
-                + this.color + ". Ограничения: Бег: " + this.limitRun
-                + " м., плавание: " + this.limitSwim + " м., прыжок: " + this.limitJump + " м.";
+                + this.color + ". Предел: Бега: " + this.limitRun
+                + " м., плавания: " + this.limitSwim + " м., прыжка: " + this.limitJump + " м.";
     }
 
 }
+
