@@ -18,8 +18,7 @@ public class WorkingWithFiles {
         createFiles();
         gluingFiles();
         checkWordInFile("text1.txt", "химический");
-        System.out.println("В названии файла или папки есть указанное слово ? " + checkWordInFolder("C:/Users/volox/IdeaProjects/homework/", ".idea"));
-        System.out.println("В названии файла или папки есть указанное слово ? " + checkWordInFolder("C:/Users/volox/IdeaProjects/homework/", "text2.txt"));
+        System.out.println("В названии файла или папки есть указанное слово ? " + checkWordInFolder("C:/Users/volox/IdeaProjects/homework/", "home"));
     }
 
     /**
@@ -89,51 +88,21 @@ public class WorkingWithFiles {
         }
     }
 
-    /**
-     * Решение задачи №1
-     * Метод проверяет, есть ли указанное слово в названии файла или папки.
-     *
-     * @param dir          - директория, в которой находится папка или файл.
-     * @param folderOrFile - название файла или папки, которую ищем.
-     * @return - True, если есть указанное слово.
-     */
-
-    private static boolean checkWordInFolder(String dir, String folderOrFile) {
-        File check = new File(dir);
-        File[] arrFiles = check.listFiles();
-        for (int i = 0; i < arrFiles.length; i++) {
-            if (folderOrFile.length() == arrFiles[i].getName().length()) {
-                for (int j = 0; j < folderOrFile.length(); j++) {
-                    if (folderOrFile.charAt(j) == arrFiles[i].getName().charAt(j)) {
-                        return true;
-                    }
+    private static boolean checkWordInFolder(String dir, String findText) {
+        try {
+            File path = new File(dir);
+            File[] arrFiles = path.listFiles();
+            if (path.listFiles() == null) {
+                throw new IOException("Директория не существует или пустая");
+            }
+            for (int i = 0; i < arrFiles.length; i++) {
+                if (arrFiles[i].getName().contains(findText)) {
+                    return true;
                 }
             }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
         return false;
     }
-
-    /**
-     * Решение задачи №2
-     */
-
-//    private static boolean checkWordInFolder(String dir, String folderOrFile) {
-//        File check = new File(dir + folderOrFile);
-//        return check.exists();
-//    }
-
-    /**
-     * Решение задачи №3
-     */
-
-//    private static boolean checkWordInFolder(String dir, String folderOrFile) {
-//        File check = new File(dir);
-//        File[] arrFiles = check.listFiles();
-//        for (int i = 0; i < arrFiles.length; i++) {
-//            if (folderOrFile.contains(arrFiles[i].getName())) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
 }
