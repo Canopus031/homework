@@ -17,9 +17,10 @@ public class WorkingWithFiles {
     public static void main(String[] args) {
         createFiles();
         gluingFiles();
-        checkWordInFile("text1.txt", "подгруппы");
+        checkWordInFile("text1.txt", "химический");
+
         System.out.println("В названии файла или папки есть указанное слово ? " + checkWordInFolder("C:/Users/volox/IdeaProjects/homework/", ".idea"));
-        System.out.println("В названии файла или папки есть указанное слово ? " + checkWordInFolder("C:/Users/volox/IdeaProjects/homework/", "text1.txt"));
+        System.out.println("В названии файла или папки есть указанное слово ? " + checkWordInFolder("C:/Users/volox/IdeaProjects/homework/", "text2.txt"));
     }
 
     /**
@@ -90,6 +91,7 @@ public class WorkingWithFiles {
     }
 
     /**
+     * Решение задачи №1
      * Метод проверяет, есть ли указанное слово в названии файла или папки.
      *
      * @param dir          - директория, в которой находится папка или файл.
@@ -98,9 +100,27 @@ public class WorkingWithFiles {
      */
 
     private static boolean checkWordInFolder(String dir, String folderOrFile) {
-        File check = new File(dir + folderOrFile);
-        return check.exists();
+        File check = new File(dir);
+        File[] arrFiles = check.listFiles();
+        for (int i = 0; i < arrFiles.length; i++) {
+            if (folderOrFile.length() == arrFiles[i].getName().length()) {
+                for (int j = 0; j < folderOrFile.length(); j++) {
+                    if (folderOrFile.charAt(j) == arrFiles[i].getName().charAt(j)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
+    /**
+     * Решение задачи №2
+     */
+
+//    private static boolean checkWordInFolder(String dir, String folderOrFile) {
+//        File check = new File(dir + folderOrFile);
+//        return check.exists();
+//    }
 
 }
