@@ -16,12 +16,13 @@ public class GameMap extends JPanel {
 
     void startNewGame(int mode, int FieldSizeX, int FieldSizeY, int WinLength) {
         JPanel map = new JPanel();
+        JButton[] emptyDot = new JButton[FieldSizeX * FieldSizeY];
         map.setLayout(new GridLayout(FieldSizeX, FieldSizeY));
         for (int i = 0; i < (FieldSizeX * FieldSizeY); i++) {
-            JButton emptyDot = new JButton(EMPTY_DOT);
-            emptyDot.setBackground(Color.decode("#d4d5d7"));
-            emptyDot.setFocusable(false);
-            map.add(emptyDot);
+            emptyDot[i] = new JButton(EMPTY_DOT);
+            emptyDot[i].setBackground(Color.decode("#d4d5d7"));
+            emptyDot[i].setFocusable(false);
+            map.add(emptyDot[i]);
         }
         add(map);
         setVisible(true);
