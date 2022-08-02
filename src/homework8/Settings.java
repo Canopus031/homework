@@ -21,6 +21,7 @@ public class Settings extends JFrame {
 
     private JRadioButton humVSAI;
     private JRadioButton humVSHUM;
+    private JRadioButton humVSEasyPC;
     private JSlider slideWinLen;
     private JSlider slideFieldSize;
 
@@ -62,6 +63,7 @@ public class Settings extends JFrame {
         JLabel labelMode = new JLabel("Choice mode");
         humVSAI = new JRadioButton("Human vs AI", true);
         humVSHUM = new JRadioButton("Human vs HUMAN");
+
         ButtonGroup gameMode = new ButtonGroup();
         add(labelMode);
         gameMode.add(humVSAI);

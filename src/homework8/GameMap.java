@@ -1,6 +1,5 @@
 package homework8;
 
-import javax.management.loading.PrivateMLet;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -33,19 +32,14 @@ public class GameMap extends JPanel {
     private static final int STATE_WIN_HUMAN = 1;
     private static final int STATE_WIN_AI = 2;
 
+    private boolean isXTurn = false;
+
     private static final String MSG_WIN_HUMAN = "Победил игрок!";
     private static final String MSG_WIN_AI = "Победил компьютер!";
     private static final String MSG_DRAW = "Ничья!";
 
     GameMap() {
         setBackground(Color.WHITE);
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                super.mouseReleased(e);
-                update(e);
-            }
-        });
         initialMap = false;
     }
 
@@ -57,6 +51,7 @@ public class GameMap extends JPanel {
         field = new int[fieldSizeX][fieldSizeY];
         initialMap = true;
         repaint();
+        isGameMode();
         isGameOver = false;
     }
 
@@ -97,7 +92,6 @@ public class GameMap extends JPanel {
                     g2.setStroke(new BasicStroke(3));
                     g2.drawLine((x * cellWidth + PADDING_DOT), (y * cellHeight + PADDING_DOT), (x + 1) * cellWidth - PADDING_DOT, (y + 1) * cellHeight - PADDING_DOT);
                     g2.drawLine((x + 1) * cellWidth - PADDING_DOT, (y * cellHeight + PADDING_DOT), (x * cellWidth + PADDING_DOT), (y + 1) * cellHeight - PADDING_DOT);
-
                 } else if (field[x][y] == AI_DOT) {
                     graphics.setColor(new Color(73, 77, 78));
                     graphics.fillOval(x * cellWidth + PADDING_DOT, y * cellHeight + PADDING_DOT, cellWidth - PADDING_DOT * 2, cellHeight - PADDING_DOT * 2);
@@ -131,7 +125,26 @@ public class GameMap extends JPanel {
         }
     }
 
-    void update(MouseEvent e) {
+    private void isGameMode() {
+        addMouseListener( new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                super.mouseReleased(e);
+                switch (STATE_MODE) {
+                    case MODE_HVSAI:
+                        gameModeHVSAI(e);
+                        break;
+                    case MODE_HVSHM:
+                        gameModeHVSH(e);
+                        break;
+                    default:
+                        throw new RuntimeException("Unexpected game mode: " + STATE_MODE);
+                }
+            }
+        });
+    }
+
+    private void gameModeHVSAI(MouseEvent e) {
         if (!initialMap) {
             return;
         }
@@ -157,6 +170,41 @@ public class GameMap extends JPanel {
         repaint();
         if (checkWin(AI_DOT)) {
             setGameOver(STATE_WIN_AI);
+            return;
+        }
+        if (isFullMap()) {
+            setGameOver(STATE_DRAW);
+            return;
+        }
+    }
+
+    private void gameModeHVSH(MouseEvent e) {
+        if (!initialMap) {
+            return;
+        }
+        if (isGameOver) {
+            return;
+        }
+        int cellX = e.getX() / cellWidth;
+        int cellY = e.getY() / cellHeight;
+
+        if (!isValidCell(cellX, cellY) || !isEmptyCell(cellX, cellY)) {
+            return;
+        }
+        isXTurn = !isXTurn;
+        field[cellX][cellY] = isXTurn ? HUMAN_DOT : AI_DOT;
+        if (checkWin(HUMAN_DOT)) {
+            setGameOver(STATE_WIN_HUMAN);
+            return;
+        }
+        if (isFullMap()) {
+            setGameOver(STATE_DRAW);
+            return;
+        }
+        field[cellX][cellY] = isXTurn ? HUMAN_DOT : AI_DOT;
+        repaint();
+        if (checkWin(AI_DOT)) {
+            setGameOver(STATE_WIN_HUMAN);
             return;
         }
         if (isFullMap()) {
