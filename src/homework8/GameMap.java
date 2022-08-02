@@ -121,7 +121,7 @@ public class GameMap extends JPanel {
                     graphics.setColor(new Color(73, 77, 78));
                     graphics.fillOval(x * cellWidth + PADDING_DOT, y * cellHeight + PADDING_DOT, cellWidth - PADDING_DOT * 2, cellHeight - PADDING_DOT * 2);
                 } else {
-                    throw new RuntimeException("Error");
+                    throw new RuntimeException("Can't repaint cell field");
                 }
             }
         }
