@@ -7,32 +7,33 @@ import java.awt.event.MouseEvent;
 import java.util.Random;
 
 public class GameMap extends JPanel {
-    private int STATE_MODE;
+
+    private int STATE_MODE; // Режим игры
     public static final int MODE_HVSAI = 1;
     public static final int MODE_HVSHM = 2;
 
     private static final Random RANDOM = new Random();
     private static final int EMPTY_DOT = 0;
-    private static final int HUMAN_DOT = 1;
-    private static final int AI_DOT = 2;
-    private static final int PADDING_DOT = 5;
+    private static final int HUMAN_DOT = 1; // Фишка пользователя - X (Если выбран режим игры для 2 игроков, то используется фишка бота AI_DOT)
+    private static final int AI_DOT = 2; // Фишка компьютера - 0
+    private static final int PADDING_DOT = 5; // Отступ фишек в ячейке.
 
-    private int fieldSizeX;
-    private int fieldSizeY;
+    private int fieldSizeX; // Размер поля по X.
+    private int fieldSizeY; // Размер поля по Y.
     private int winLength;
-    private int[][] field;
+    private int[][] field; // Поле для игры.
 
-    private int cellWidth;
-    private int cellHeight;
+    private int cellWidth; // Размер ячейки по ширине.
+    private int cellHeight; // Размер ячейки по высоте.
     private boolean initialMap;
     private boolean isGameOver;
 
-    private int stateGameOver;
-    private static final int STATE_DRAW = 0;
-    private static final int STATE_WIN_HUMAN = 1;
-    private static final int STATE_WIN_AI = 2;
+    private int stateGameOver; // Состояние игры.
+    private static final int STATE_DRAW = 0; // Ничья
+    private static final int STATE_WIN_HUMAN = 1; // Победил пользователь
+    private static final int STATE_WIN_AI = 2; // Победил компьютер.
 
-    private boolean isXTurn = false;
+    private boolean isXTurn = false; // True - ходит X; False - ходит О;
 
     private static final String MSG_WIN_HUMAN = "Победил игрок!";
     private static final String MSG_WIN_AI = "Победил компьютер!";
@@ -42,6 +43,14 @@ public class GameMap extends JPanel {
         setBackground(Color.WHITE);
         initialMap = false;
     }
+
+    /**
+     * Метод запускает новую игру с параметрами, которые указал пользователь.
+     * @param mode - Режим игры.
+     * @param fieldSizeX - Размер поля по X.
+     * @param fieldSizeY - Размер поля по Y.
+     * @param winLength - Длина одинаковых фишек для победы.
+     */
 
     void startNewGame(int mode, int fieldSizeX, int fieldSizeY, int winLength) {
         this.STATE_MODE = mode;
@@ -55,11 +64,21 @@ public class GameMap extends JPanel {
         isGameOver = false;
     }
 
+    /**
+     * Переопределенный метод.
+     * @param graphics the <code>Graphics</code> object to protect
+     */
+
     @Override
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
         render(graphics);
     }
+
+    /**
+     * Метод рисует нашу карту, а также фишки X / 0
+     * @param graphics - the <code>Graphics</code> object to protect
+     */
 
     private void render(Graphics graphics) {
         if (!initialMap) {
@@ -71,15 +90,21 @@ public class GameMap extends JPanel {
         cellHeight = height / fieldSizeY;
         graphics.setColor(Color.GRAY);
 
+        // Рисуем вертикальные линии
+
         for (int i = 0; i < fieldSizeX; i++) {
             int x = i * cellWidth;
             graphics.drawLine(x, 0, x, height);
         }
 
+        // Рисуем горизонтальные линии
+
         for (int i = 0; i < fieldSizeY; i++) {
             int y = i * cellHeight;
             graphics.drawLine(0, y, width, y);
         }
+
+        // Рисуем фишки
 
         for (int x = 0; x < fieldSizeX; x++) {
             for (int y = 0; y < fieldSizeY; y++) {
@@ -100,49 +125,58 @@ public class GameMap extends JPanel {
                 }
             }
         }
+
+        // Проверяем завершена ли игра, если да вызываем метод showMessageGameOver
+
         if (isGameOver) {
             showMessageGameOver(graphics);
         }
     }
+
+    /**
+     * Этот метод создает прямоугольник с сообщением, если кто-то выиграл или сыграл вничью, в зависимости от того, что произошло в игре.
+     * @param graphics - the <code>Graphics</code> object to protect
+     */
 
     private void showMessageGameOver(Graphics graphics) {
         graphics.setColor(Color.GRAY);
         graphics.fillRect(0, 185, getWidth(), 60);
         graphics.setColor(Color.YELLOW);
         graphics.setFont(new Font("Montserrat", Font.BOLD, 25));
+
         switch (stateGameOver) {
-            case STATE_WIN_HUMAN:
-                graphics.drawString(MSG_WIN_HUMAN, 130, getHeight() / 2);
-                break;
-            case STATE_WIN_AI:
-                graphics.drawString(MSG_WIN_AI, 110, getHeight() / 2);
-                break;
-            case STATE_DRAW:
-                graphics.drawString(MSG_DRAW, 180, getHeight() / 2);
-                break;
-            default:
-                throw new RuntimeException("Unexpected game parameter");
+            case STATE_WIN_HUMAN -> graphics.drawString(MSG_WIN_HUMAN, 130, getHeight() / 2);
+            case STATE_WIN_AI -> graphics.drawString(MSG_WIN_AI, 110, getHeight() / 2);
+            case STATE_DRAW -> graphics.drawString(MSG_DRAW, 180, getHeight() / 2);
+            default -> throw new RuntimeException("Unexpected game parameter");
         }
     }
 
+    /**
+     * Метод отлавливает клики по полю.
+     * Если STATE_MODE = MODE_HVSAI, то вызывается метод gameModeHVSAI.
+     * Если STATE_MODE = MODE_HVSHM, то вызывается метод gameModeHVSH.
+     * Если STATE_MODE = значению, которое не указано в программе, то возвращает Exception - <text>Unexpected game mode: STATE_MODE</text>
+     */
+
     private void isGameMode() {
-        addMouseListener( new MouseAdapter() {
+        addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
                 super.mouseReleased(e);
                 switch (STATE_MODE) {
-                    case MODE_HVSAI:
-                        gameModeHVSAI(e);
-                        break;
-                    case MODE_HVSHM:
-                        gameModeHVSH(e);
-                        break;
-                    default:
-                        throw new RuntimeException("Unexpected game mode: " + STATE_MODE);
+                    case MODE_HVSAI -> gameModeHVSAI(e);
+                    case MODE_HVSHM -> gameModeHVSH(e);
+                    default -> throw new RuntimeException("Unexpected game mode: " + STATE_MODE);
                 }
             }
         });
     }
+
+    /**
+     * Метод для режима игры HUMAN vs AI.
+     * @param e - событие.
+     */
 
     private void gameModeHVSAI(MouseEvent e) {
         if (!initialMap) {
@@ -177,6 +211,11 @@ public class GameMap extends JPanel {
             return;
         }
     }
+
+    /**
+     * Метод для режима игры HUMAN vs HUMAN.
+     * @param e - событие.
+     */
 
     private void gameModeHVSH(MouseEvent e) {
         if (!initialMap) {
@@ -213,19 +252,43 @@ public class GameMap extends JPanel {
         }
     }
 
+    /**
+     * Метод для установки завершения игры.
+     * @param gameOver - состояние игры. STATE_DRAW / STATE_WIN_HUMAN / STATE_WIN_AI.
+     */
+
     private void setGameOver(int gameOver) {
         isGameOver = true;
         stateGameOver = gameOver;
         repaint();
     }
 
+    /**
+     * Метод проверяет, являются ли введенные значения допустимыми.
+     * @param x - координаты по X.
+     * @param y - координаты по Y.
+     * @return - результат проверки координат. [True || False]
+     */
+
     private boolean isValidCell(int x, int y) {
         return x >= 0 && x < fieldSizeX && y >= 0 && y < fieldSizeY;
     }
 
+    /**
+     * Метод проверяет свободна ли ячейка.
+     * @param x - координаты по X.
+     * @param y - координаты по Y.
+     * @return - результат проверки ячейки. [True || False]
+     */
+
     private boolean isEmptyCell(int x, int y) {
         return field[x][y] == EMPTY_DOT;
     }
+
+    /**
+     *  Метод генерирует случайные координаты для хода компьютера, в зависимости от проверки метода turnAIWinCell и turnHumanWinCell.
+     *  Если turnAIWinCell или turnHumanWinCell возвращают True, то выходим из метода.
+     */
 
     private void aiTurn() {
         if (turnAIWinCell()) {
@@ -243,6 +306,11 @@ public class GameMap extends JPanel {
         field[x][y] = AI_DOT;
     }
 
+    /**
+     * Метод проверяет, может ли выиграть компьютер своим следующим ходом.
+     * @return - правда или ложь.
+     */
+
     private boolean turnAIWinCell() {
         for (int y = 0; y < fieldSizeY; y++) {
             for (int x = 0; x < fieldSizeX; x++) {
@@ -257,6 +325,11 @@ public class GameMap extends JPanel {
         }
         return false;
     }
+
+    /**
+     * Метод проверяет, может ли выиграть игрок своим следующим ходом.
+     * @return - правда или ложь.
+     */
 
     private boolean turnHumanWinCell() {
         for (int y = 0; y < fieldSizeY; y++) {
@@ -273,6 +346,12 @@ public class GameMap extends JPanel {
         }
         return false;
     }
+
+    /**
+     * Метод проверки победы.
+     * @param gameChip - игровая фишка. [ HUMAN_DOT || AI_DOT ]
+     * @return - True = выиграл || False = нет.
+     */
 
     private boolean checkWin(int gameChip) {
         for (int x = 0; x < fieldSizeX; x++) {
@@ -294,6 +373,17 @@ public class GameMap extends JPanel {
         return false;
     }
 
+    /**
+     * Метод проверки линии.
+     * @param x - Координаты по X.
+     * @param y - Координаты по Y.
+     * @param vx - Вектор по X.
+     * @param vy - Вектор по Y.
+     * @param winLen - Длина одинаковых фишек для победы.
+     * @param gameChip - Игровая фишка. [ HUMAN_DOT || AI_DOT ]
+     * @return - результат проверки. [True || False]
+     */
+
     private boolean checkLine(int x, int y, int vx, int vy, int winLen, int gameChip) {
         final int farX = x + (winLen - 1) * vx;
         final int farY = y + (winLen - 1) * vy;
@@ -307,6 +397,11 @@ public class GameMap extends JPanel {
         }
         return true;
     }
+
+    /**
+     * Метод проверяет, есть ли свободные ячейки на карте или нет, и возвращает логическое значение.
+     * @return - результат проверки. [True || False]
+     */
 
     private boolean isFullMap() {
         for (int x = 0; x < field.length; x++) {

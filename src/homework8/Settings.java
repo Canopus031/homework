@@ -10,6 +10,10 @@ import java.net.URL;
 
 public class Settings extends JFrame {
 
+    /**
+     *  ласс настроек игры.
+     */
+
     private static final int WINDOW_WIDTH = 360;
     private static final int WINDOW_HEIGHT = 270;
 
@@ -21,7 +25,6 @@ public class Settings extends JFrame {
 
     private JRadioButton humVSAI;
     private JRadioButton humVSHUM;
-    private JRadioButton humVSEasyPC;
     private JSlider slideWinLen;
     private JSlider slideFieldSize;
 
@@ -51,6 +54,10 @@ public class Settings extends JFrame {
         setVisible(false);
     }
 
+    /**
+     * ћетод задает размер окна и устанавливает координаты расположени€ в центре главного окна MainWindow
+     */
+
     private void setupWindowBounds() {
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         Rectangle gameMainWindow = mainWindow.getBounds();
@@ -58,6 +65,10 @@ public class Settings extends JFrame {
         int yPos = (int) gameMainWindow.getCenterY() - WINDOW_HEIGHT / 2;
         setLocation(xPos, yPos);
     }
+
+    /**
+     * ћетод добавл€ет выбор режима игры.
+     */
 
     private void addChoiceGameMode() {
         JLabel labelMode = new JLabel("Choice mode");
@@ -71,6 +82,10 @@ public class Settings extends JFrame {
         add(humVSAI);
         add(humVSHUM);
     }
+
+    /**
+     * ћетод добавл€ет возможность выбора размера пол€, а также длины выигрышных фишек
+     */
 
     private void addGameSetup() {
         JLabel labelField = new JLabel(FIELD_SIZE_PREFIX + MIN_FIELD_SIZE);
@@ -99,6 +114,10 @@ public class Settings extends JFrame {
         add(slideWinLen);
     }
 
+    /**
+     * ћетод провер€ет, какой режим игры был выбран, и передает его и другие параметры игры в аргументы метода startNewGame(mode, fieldSize, fieldSize, winLength).
+     */
+
     private void btnPlayGameClick() {
         int mode;
 
@@ -116,7 +135,11 @@ public class Settings extends JFrame {
         mainWindow.startNewGame(mode, fieldSize, fieldSize, winLength);
     }
 
-    public void setImageIcon() {
+    /**
+     * ћетод получает и устанавливает иконку дл€ приложени€.
+     */
+
+    private void setImageIcon() {
         String path = "tic-tac-toe.png";
         URL imgURL = MainWindow.class.getResource(path);
         if (imgURL != null) {

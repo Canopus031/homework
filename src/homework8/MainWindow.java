@@ -8,6 +8,10 @@ import java.net.URL;
 
 public class MainWindow extends JFrame {
 
+    /**
+     * Главное окно игры.
+     */
+
     private static final int WINDOW_WIDTH = 500;
     private static final int WINDOW_HEIGHT = 500;
     private static final int POS_X = 650;
@@ -55,11 +59,22 @@ public class MainWindow extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * @param mode - Режим игры.
+     * @param FieldSizeX - Размер поля по X.
+     * @param FieldSizeY - Размер поля по Y.
+     * @param WinLength - Длина одинаковых фишек для победы.
+     */
+
     void startNewGame(int mode, int FieldSizeX, int FieldSizeY, int WinLength) {
         gameMap.startNewGame(mode, FieldSizeX, FieldSizeY, WinLength);
     }
 
-    public void setImageIcon() {
+    /**
+     * Метод получает и устанавливает иконку для приложения.
+     */
+
+    private void setImageIcon() {
         String path = "tic-tac-toe.png";
         URL imgURL = MainWindow.class.getResource(path);
         if (imgURL != null) {
