@@ -164,13 +164,36 @@ public class GameMap extends JPanel {
             @Override
             public void mouseReleased(MouseEvent e) {
                 super.mouseReleased(e);
-                switch (STATE_MODE) {
-                    case MODE_HVSAI -> gameModeHVSAI(e);
-                    case MODE_HVSHM -> gameModeHVSH(e);
-                    default -> throw new RuntimeException("Unexpected game mode: " + STATE_MODE);
-                }
+                update(e);
             }
         });
+    }
+
+    /**
+     * Метод для запуска игры с определенным режимом.
+     * @param e - событие.
+     */
+
+    private void update(MouseEvent e) {
+        if (!initialMap) {
+            return;
+        }
+        if (isGameOver) {
+            return;
+        }
+
+        int cellX = e.getX() / cellWidth;
+        int cellY = e.getY() / cellHeight;
+
+        if (!isValidCell(cellX, cellY) || !isEmptyCell(cellX, cellY)) {
+            return;
+        }
+
+        switch (STATE_MODE) {
+            case MODE_HVSAI -> gameModeHVSAI(e, cellX, cellY);
+            case MODE_HVSHM -> gameModeHVSH(e, cellX, cellY);
+            default -> throw new RuntimeException("Unexpected game mode: " + STATE_MODE);
+        }
     }
 
     /**
@@ -178,19 +201,7 @@ public class GameMap extends JPanel {
      * @param e - событие.
      */
 
-    private void gameModeHVSAI(MouseEvent e) {
-        if (!initialMap) {
-            return;
-        }
-        if (isGameOver) {
-            return;
-        }
-        int cellX = e.getX() / cellWidth;
-        int cellY = e.getY() / cellHeight;
-
-        if (!isValidCell(cellX, cellY) || !isEmptyCell(cellX, cellY)) {
-            return;
-        }
+    private void gameModeHVSAI(MouseEvent e, int cellX, int cellY) {
         field[cellX][cellY] = X_DOT;
         if (checkWin(X_DOT)) {
             setGameOver(STATE_WIN_X);
@@ -217,19 +228,7 @@ public class GameMap extends JPanel {
      * @param e - событие.
      */
 
-    private void gameModeHVSH(MouseEvent e) {
-        if (!initialMap) {
-            return;
-        }
-        if (isGameOver) {
-            return;
-        }
-        int cellX = e.getX() / cellWidth;
-        int cellY = e.getY() / cellHeight;
-
-        if (!isValidCell(cellX, cellY) || !isEmptyCell(cellX, cellY)) {
-            return;
-        }
+    private void gameModeHVSH(MouseEvent e, int cellX, int cellY) {
         isXTurn = !isXTurn;
         field[cellX][cellY] = isXTurn ? X_DOT : O_DOT;
         if (checkWin(X_DOT)) {
